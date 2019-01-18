@@ -1,0 +1,26 @@
+version: 2
+
+jobs:
+  deploy:
+    working_directory: ~/wcc-mongo
+    docker:
+      - image: ubuntu:xenial
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: build nad push
+          command: |
+            docker build -t limboo/wcc-mongo .
+            docker login -u $DOCKER_USER_NAME -p $DOCKER_USER_PASS
+            docker push limboo/wcc-mongo
+
+
+workflows:
+  version: 2
+  wcc-mongo:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: master
