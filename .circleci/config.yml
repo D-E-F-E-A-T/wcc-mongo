@@ -3,11 +3,9 @@ version: 2
 jobs:
   deploy:
     working_directory: ~/wcc-mongo
-    docker:
-      - image: ubuntu:xenial
+    machine: true
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: build nad push
           command: |
